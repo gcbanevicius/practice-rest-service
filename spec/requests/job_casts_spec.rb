@@ -7,7 +7,7 @@ RSpec.describe "JobCasts", type: :request do
       "organization_id" => 123,
       "title" => "Lead Dev",
       "description" => "Head developer for team",
-      "compensaation_min" => 50000, 
+      "compensation_min" => 50000, 
       "compensation_max" => 100000, 
       "skills" => "Ruby",
       "city" => "NY",
@@ -51,5 +51,26 @@ RSpec.describe "JobCasts", type: :request do
 
     end
   end
+
+  describe "PATCH/PUT /job_casts/:id" do
+    it "should update the JobCast with specified ID" do
+      
+      new_job_cast_params = @job_cast_params
+      new_job_cast_params["title"] = "Test developer"
+      new_job_cast_params["description"] = "Develop test suite for software"
+
+     
+      jc = JobCast.create(@job_cast_params)      
+      #patch "/job_casts/#{jc.id}", new_job_cast_params.to_json, @request_header
+      #patch "/job_casts/#{jc.id}", :update, id: jc.id, title: "Test developer", description: "Develop test suite for software"
+      #patch :update, id: jc.id, title: "Test developer"
+      patch "/job_casts/#{jc.id}", :id => jc.id, :job_cast => new_job_cast_params
+      
+      expect(JSON.parse(response.body)["organization_id"]).to eq @job_cast_params["organization_id"]
+
+    end
+  end
+
+
 
 end

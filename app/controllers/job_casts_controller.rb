@@ -2,13 +2,18 @@ class JobCastsController < ApplicationController
   before_action :set_job_cast, only: [:show, :edit, :update, :destroy]
 
   # GET /job_casts
-  # GET /job_casts.json
   def index
     @job_casts = JobCast.all
+
+    respond_to do |format|
+      format.html # comment out this line to implement RESTful API!
+      format.json { render json: @job_casts }
+      format.any { render json: @job_casts }
+    end
+
   end
 
   # GET /job_casts/1
-  # GET /job_casts/1.json
   def show
     @job_cast = JobCast.find(params[:id])
 
@@ -48,15 +53,14 @@ class JobCastsController < ApplicationController
   end
 
   # PATCH/PUT /job_casts/1
-  # PATCH/PUT /job_casts/1.json
   def update
     respond_to do |format|
       if @job_cast.update(job_cast_params)
-        format.html { redirect_to @job_cast, notice: 'Job cast was successfully updated.' }
-        format.json { render :show, status: :ok, location: @job_cast }
+        format.json { render json: @job_cast, status: :ok }
+        format.any { render json: @job_cast, status: :ok }
       else
-        format.html { render :edit }
         format.json { render json: @job_cast.errors, status: :unprocessable_entity }
+        format.any { render json: @job_cast.errors, status: :unprocessable_entity }
       end
     end
   end
