@@ -1,53 +1,76 @@
 class IndividualsController < ApplicationController
   before_action :set_individual, only: [:show, :edit, :update, :destroy]
 
-  # GET /individuals
+  # get /individuals
   def index
     @individuals = Individual.all
+
+    respond_to do |format|
+      format.html # comment out this line to implement restful api!
+      format.json { render json: @individuals }
+      format.any { render json: @individuals }
+    end
+
   end
 
-  # GET /individuals/1
+  # get /individuals/1
   def show
+    @individual = Individual.find(params[:id])
+
+    respond_to do |format|
+      if @individual
+        format.json { render json: @individual }
+        format.any { render json: @individual }
+      else
+        format.json { render json: @individual.errors }
+        format.any { render json: @individual.errors }
+      end
+    end
   end
 
-  # GET /individuals/new
+  # get /individuals/new
   def new
     @individual = Individual.new
   end
 
-  # GET /individuals/1/edit
+  # get /individuals/1/edit
   def edit
   end
 
-  # POST /individuals
+  # post /individuals
   def create
     @individual = Individual.new(individual_params)
 
     respond_to do |format|
       if @individual.save
-        format.json { render :show, status: :created, location: @individual }
+        format.json { render json: @individual, status: :created }
+        format.any { render json: @individual, status: :created }
       else
         format.json { render json: @individual.errors, status: :unprocessable_entity }
+        format.any { render json: @individual.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /individuals/1
+  # patch/put /individuals/1
   def update
     respond_to do |format|
       if @individual.update(individual_params)
-        format.json { render :show, status: :ok, location: @individual }
+        format.json { render json: @individual, status: :ok }
+        format.any { render json: @individual, status: :ok }
       else
         format.json { render json: @individual.errors, status: :unprocessable_entity }
+        format.any { render json: @individual.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /individuals/1
+  # delete /individuals/1
   def destroy
     @individual.destroy
     respond_to do |format|
       format.json { head :no_content }
+      format.any{ head :no_content }
     end
   end
 
