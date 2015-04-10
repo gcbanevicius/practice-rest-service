@@ -6,13 +6,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :individuals, :defaults => { :format => :json } do
+  resources :individuals do
     member do
       get :delete
     end
   end
 
-  resources :organizations, :defaults => { :format => :json } do
+  resources :organizations do
     member do
       get :delete
     end
