@@ -5,6 +5,8 @@
 <table>
   <thead>
     <tr>
+      <th>ID</th>
+      <th>Organization ID</th>
       <th>Title</th>
       <th>Description</th>
       <th>Compensation min</th>
@@ -21,6 +23,8 @@
   <tbody>
     <% @job_casts.each do |job_cast| %>
       <tr>
+        <td><%= job_cast.id %></td>
+        <td><%= job_cast.organization_id %></td>
         <td><%= job_cast.title %></td>
         <td><%= job_cast.description %></td>
         <td><%= job_cast.compensation_min %></td>

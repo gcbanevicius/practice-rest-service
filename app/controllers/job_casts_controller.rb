@@ -10,6 +10,17 @@ class JobCastsController < ApplicationController
   # GET /job_casts/1
   # GET /job_casts/1.json
   def show
+    @job_cast = JobCast.find(params[:id])
+
+    respond_to do |format|
+      if @job_cast
+        format.json { render json: @job_cast }
+        format.any { render json: @job_cast }
+      else
+        format.json { render json: @job_cast.errors }
+        format.any { render json: @job_cast.errors }
+      end
+    end
   end
 
   # GET /job_casts/new
@@ -22,17 +33,16 @@ class JobCastsController < ApplicationController
   end
 
   # POST /job_casts
-  # POST /job_casts.json
   def create
     @job_cast = JobCast.new(job_cast_params)
 
     respond_to do |format|
       if @job_cast.save
-        format.html { redirect_to @job_cast, notice: 'Job cast was successfully created.' }
-        format.json { render :show, status: :created, location: @job_cast }
+        format.json { render json: @job_cast, status: :created }
+        format.any { render json: @job_cast, status: :created }
       else
-        format.html { render :new }
         format.json { render json: @job_cast.errors, status: :unprocessable_entity }
+        format.any { render json: @job_cast.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -69,6 +79,6 @@ class JobCastsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_cast_params
-      params.require(:job_cast).permit(:title, :description, :compensation_min, :compensation_max, :skills, :city, :state, :postal_code, :country_code)
+      params.require(:job_cast).permit(:organization_id, :title, :description, :compensation_min, :compensation_max, :skills, :city, :state, :postal_code, :country_code)
     end
 end

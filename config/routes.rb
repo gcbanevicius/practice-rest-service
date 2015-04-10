@@ -1,7 +1,23 @@
 Rails.application.routes.draw do
-  resources :job_casts
-  resources :individuals
-  resources :organizations
+
+  resources :job_casts do 
+    member do
+      get :delete
+    end
+  end
+
+  resources :individuals, :defaults => { :format => :json } do
+    member do
+      get :delete
+    end
+  end
+
+  resources :organizations, :defaults => { :format => :json } do
+    member do
+      get :delete
+    end
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
