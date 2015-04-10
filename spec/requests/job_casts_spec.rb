@@ -61,15 +61,25 @@ RSpec.describe "JobCasts", type: :request do
 
      
       jc = JobCast.create(@job_cast_params)      
-      #patch "/job_casts/#{jc.id}", new_job_cast_params.to_json, @request_header
-      #patch "/job_casts/#{jc.id}", :update, id: jc.id, title: "Test developer", description: "Develop test suite for software"
-      #patch :update, id: jc.id, title: "Test developer"
       patch "/job_casts/#{jc.id}", :id => jc.id, :job_cast => new_job_cast_params
       
-      expect(JSON.parse(response.body)["organization_id"]).to eq @job_cast_params["organization_id"]
+      expect(JSON.parse(response.body)["title"]).to eq @job_cast_params["title"]
+      expect(JSON.parse(response.body)["description"]).to eq @job_cast_params["description"]
 
     end
   end
+
+  describe "DELETE /job_casts/:id" do
+    it "should delete the JobCast with specified ID" do
+      
+      jc = JobCast.create(@job_cast_params)      
+      delete "/job_casts/#{jc.id}"      
+
+      expect(response).to have_http_status(204)
+
+    end
+  end
+
 
 
 

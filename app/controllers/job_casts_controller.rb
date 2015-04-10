@@ -66,12 +66,11 @@ class JobCastsController < ApplicationController
   end
 
   # DELETE /job_casts/1
-  # DELETE /job_casts/1.json
   def destroy
     @job_cast.destroy
     respond_to do |format|
-      format.html { redirect_to job_casts_url, notice: 'Job cast was successfully destroyed.' }
       format.json { head :no_content }
+      format.any{ head :no_content }
     end
   end
 
