@@ -1,0 +1,6 @@
+-I decided to just use two separate min and max fields for the compenstation
+range, just to make things simpler/be compatible with DBs that don't have
+support a range type.
+
+-The :skills field for JobCast is treated as serialized text array, to 
+avoid making a new model for what might be an arbitrary list of words.

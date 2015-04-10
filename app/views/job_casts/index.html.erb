@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Job Casts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Compensation min</th>
+      <th>Compensation max</th>
+      <th>Skills</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Postal code</th>
+      <th>Country code</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @job_casts.each do |job_cast| %>
+      <tr>
+        <td><%= job_cast.title %></td>
+        <td><%= job_cast.description %></td>
+        <td><%= job_cast.compensation_min %></td>
+        <td><%= job_cast.compensation_max %></td>
+        <td><%= job_cast.skills %></td>
+        <td><%= job_cast.city %></td>
+        <td><%= job_cast.state %></td>
+        <td><%= job_cast.postal_code %></td>
+        <td><%= job_cast.country_code %></td>
+        <td><%= link_to 'Show', job_cast %></td>
+        <td><%= link_to 'Edit', edit_job_cast_path(job_cast) %></td>
+        <td><%= link_to 'Destroy', job_cast, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Job cast', new_job_cast_path %>

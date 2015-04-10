@@ -1,0 +1,17 @@
+class CreateJobCasts < ActiveRecord::Migration
+  def change
+    create_table :job_casts do |t|
+      t.string :title
+      t.text :description
+      t.int :compensation_min
+      t.int :compensation_max
+      t.text :skills
+      t.string :city
+      t.string :state
+      t.string :postal_code
+      t.string :country_code
+
+      t.timestamps null: false
+    end
+  end
+end
