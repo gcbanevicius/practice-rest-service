@@ -16,6 +16,7 @@
       <th>State</th>
       <th>Postal code</th>
       <th>Country code</th>
+      <th>Individuals</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -34,6 +35,11 @@
         <td><%= job_cast.state %></td>
         <td><%= job_cast.postal_code %></td>
         <td><%= job_cast.country_code %></td>
+        <% individuals = job_cast.individuals %>
+        <% individuals.each do |individual| %>
+          <td><%= "#{individual.first_name} #{individual.last_name}" %>, <td>
+        <% end %>
+
         <td><%= link_to 'Show', job_cast %></td>
         <td><%= link_to 'Edit', edit_job_cast_path(job_cast) %></td>
         <td><%= link_to 'Destroy', job_cast, method: :delete, data: { confirm: 'Are you sure?' } %></td>

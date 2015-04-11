@@ -5,10 +5,12 @@
 <table>
   <thead>
     <tr>
+      <th>ID</th>
       <th>First name</th>
       <th>Last name</th>
       <th>Email</th>
       <th>Password</th>
+      <th>Job Casts</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,10 +18,16 @@
   <tbody>
     <% @individuals.each do |individual| %>
       <tr>
+        <td><%= individual.id %></td>
         <td><%= individual.first_name %></td>
         <td><%= individual.last_name %></td>
         <td><%= individual.email %></td>
         <td><%= individual.password %></td>
+        <% job_casts = individual.job_casts %>
+        <% job_casts.each do |job_cast| %>
+          <td><%= job_cast.title %>, <td>
+        <% end %>
+
         <td><%= link_to 'Show', individual %></td>
         <td><%= link_to 'Edit', edit_individual_path(individual) %></td>
         <td><%= link_to 'Destroy', individual, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -40,8 +40,6 @@ class IndividualsController < ApplicationController
   # post /individuals
   def create
     @individual = Individual.new(individual_params)
-    #@job_casts = JobCast.where(:id => params[:job_cast_id])
-    #@individual = 
 
     respond_to do |format|
       if @individual.save
@@ -57,7 +55,6 @@ class IndividualsController < ApplicationController
   # patch/put /individuals/1
   def update
     @job_cast = JobCast.where(:id => params[:job_cast_id])
-    #@individual.job_casts << @job_cast
     
     respond_to do |format|
       if @individual.update(individual_params)
