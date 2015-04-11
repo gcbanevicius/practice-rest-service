@@ -82,5 +82,4 @@ RSpec.describe "JobCasts", type: :request do
 
 
 
-
 end

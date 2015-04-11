@@ -24,11 +24,31 @@ RSpec.describe JobCastsController, type: :controller do
   # JobCast. As you add validations to JobCast, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {
+      title: "Junior Developer",
+      description: "A junior dev on the team",
+      compensation_min: 500,
+      compensation_max: 1000,
+      skills: "Ruby, Python, Javascript, HTML, CSS",
+      city: "NY",
+      state: "NY",
+      postal_code: "00001",
+      country_code: "1"
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      title: "Junior Developer",
+      description: "A junior dev on the team",
+      compensation_min: 500,
+      compensation_max: 1000,
+      skills: "Ruby, Python, Javascript, HTML, CSS",
+      city: "  ",
+      state: "",
+      postal_code: "00001",
+      country_code: "1"
+    }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -36,11 +56,12 @@ RSpec.describe JobCastsController, type: :controller do
   # JobCastsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
+
   describe "GET #index" do
     it "assigns all job_casts as @job_casts" do
       job_cast = JobCast.create! valid_attributes
-      get :index, {}, valid_session
-      expect(assigns(:job_casts)).to eq([job_cast])
+      get :index
+      expect(response).to have_http_status(200)
     end
   end
 
@@ -83,7 +104,7 @@ RSpec.describe JobCastsController, type: :controller do
 
       it "redirects to the created job_cast" do
         post :create, {:job_cast => valid_attributes}, valid_session
-        expect(response).to redirect_to(JobCast.last)
+        expect(response.status).to eq 201
       end
     end
 
@@ -93,24 +114,30 @@ RSpec.describe JobCastsController, type: :controller do
         expect(assigns(:job_cast)).to be_a_new(JobCast)
       end
 
-      it "re-renders the 'new' template" do
-        post :create, {:job_cast => invalid_attributes}, valid_session
-        expect(response).to render_template("new")
-      end
     end
   end
 
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {
+          title: "Senior Developer",
+          description: "A senior dev on the team",
+          compensation_min: 500,
+          compensation_max: 1000,
+          skills: "Ruby, Python, Javascript, HTML, CSS",
+          city: "NY",
+          state: "NY",
+          postal_code: "00001",
+          country_code: "1"
+        }
       }
 
       it "updates the requested job_cast" do
         job_cast = JobCast.create! valid_attributes
         put :update, {:id => job_cast.to_param, :job_cast => new_attributes}, valid_session
         job_cast.reload
-        skip("Add assertions for updated state")
+        expect(job_cast[:title]).to eq "Senior Developer"
       end
 
       it "assigns the requested job_cast as @job_cast" do
@@ -122,7 +149,7 @@ RSpec.describe JobCastsController, type: :controller do
       it "redirects to the job_cast" do
         job_cast = JobCast.create! valid_attributes
         put :update, {:id => job_cast.to_param, :job_cast => valid_attributes}, valid_session
-        expect(response).to redirect_to(job_cast)
+        expect(response.status).to eq 200
       end
     end
 
@@ -133,11 +160,6 @@ RSpec.describe JobCastsController, type: :controller do
         expect(assigns(:job_cast)).to eq(job_cast)
       end
 
-      it "re-renders the 'edit' template" do
-        job_cast = JobCast.create! valid_attributes
-        put :update, {:id => job_cast.to_param, :job_cast => invalid_attributes}, valid_session
-        expect(response).to render_template("edit")
-      end
     end
   end
 
@@ -152,7 +174,7 @@ RSpec.describe JobCastsController, type: :controller do
     it "redirects to the job_casts list" do
       job_cast = JobCast.create! valid_attributes
       delete :destroy, {:id => job_cast.to_param}, valid_session
-      expect(response).to redirect_to(job_casts_url)
+      expect(response.status).to eq 204
     end
   end
 

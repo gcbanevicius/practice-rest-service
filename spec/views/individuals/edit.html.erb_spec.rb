@@ -5,7 +5,7 @@ RSpec.describe "individuals/edit", type: :view do
     @individual = assign(:individual, Individual.create!(
       :first_name => "MyString",
       :last_name => "MyString",
-      :email => "MyString",
+      :email => "MyString@mystring.com",
       :password => "MyString"
     ))
   end

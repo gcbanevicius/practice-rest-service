@@ -24,11 +24,16 @@ RSpec.describe OrganizationsController, type: :controller do
   # Organization. As you add validations to Organization, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {
+      name: "Big Bank Corp",
+      url: "bigbank.com"
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      name: "Big Bank Corp"
+    }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -83,7 +88,7 @@ RSpec.describe OrganizationsController, type: :controller do
 
       it "redirects to the created organization" do
         post :create, {:organization => valid_attributes}, valid_session
-        expect(response).to redirect_to(Organization.last)
+        expect(response.status).to eq 201
       end
     end
 
@@ -93,24 +98,23 @@ RSpec.describe OrganizationsController, type: :controller do
         expect(assigns(:organization)).to be_a_new(Organization)
       end
 
-      it "re-renders the 'new' template" do
-        post :create, {:organization => invalid_attributes}, valid_session
-        expect(response).to render_template("new")
-      end
     end
   end
 
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {
+          name: "Big Bank Number 2",
+          url: "bank2.com"
+        }
       }
 
       it "updates the requested organization" do
         organization = Organization.create! valid_attributes
         put :update, {:id => organization.to_param, :organization => new_attributes}, valid_session
         organization.reload
-        skip("Add assertions for updated state")
+        expect(organization[:name]).to eq "Big Bank Number 2"
       end
 
       it "assigns the requested organization as @organization" do
@@ -122,7 +126,7 @@ RSpec.describe OrganizationsController, type: :controller do
       it "redirects to the organization" do
         organization = Organization.create! valid_attributes
         put :update, {:id => organization.to_param, :organization => valid_attributes}, valid_session
-        expect(response).to redirect_to(organization)
+        expect(response.status).to eq 200
       end
     end
 
@@ -133,11 +137,6 @@ RSpec.describe OrganizationsController, type: :controller do
         expect(assigns(:organization)).to eq(organization)
       end
 
-      it "re-renders the 'edit' template" do
-        organization = Organization.create! valid_attributes
-        put :update, {:id => organization.to_param, :organization => invalid_attributes}, valid_session
-        expect(response).to render_template("edit")
-      end
     end
   end
 
@@ -152,7 +151,7 @@ RSpec.describe OrganizationsController, type: :controller do
     it "redirects to the organizations list" do
       organization = Organization.create! valid_attributes
       delete :destroy, {:id => organization.to_param}, valid_session
-      expect(response).to redirect_to(organizations_url)
+      expect(response.status).to eq 204
     end
   end
 

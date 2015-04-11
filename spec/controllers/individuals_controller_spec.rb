@@ -24,11 +24,21 @@ RSpec.describe IndividualsController, type: :controller do
   # Individual. As you add validations to Individual, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {
+      first_name: "Jon",
+      last_name: "Jonson",
+      email: "jonson@gmail.com",
+      password: "mypass"
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      first_name: "Jon",
+      last_name: "Jonson",
+      email: "jonson",
+      password: "mypass"
+    }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -83,34 +93,28 @@ RSpec.describe IndividualsController, type: :controller do
 
       it "redirects to the created individual" do
         post :create, {:individual => valid_attributes}, valid_session
-        expect(response).to redirect_to(Individual.last)
+        expect(response.status).to eq 201
       end
     end
 
-    context "with invalid params" do
-      it "assigns a newly created but unsaved individual as @individual" do
-        post :create, {:individual => invalid_attributes}, valid_session
-        expect(assigns(:individual)).to be_a_new(Individual)
-      end
-
-      it "re-renders the 'new' template" do
-        post :create, {:individual => invalid_attributes}, valid_session
-        expect(response).to render_template("new")
-      end
-    end
   end
 
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {
+          first_name: "Jon2",
+          last_name: "Jonson2",
+          email: "jonson2@gmail.com",
+          password: "mypass2"
+       }
       }
 
       it "updates the requested individual" do
         individual = Individual.create! valid_attributes
         put :update, {:id => individual.to_param, :individual => new_attributes}, valid_session
         individual.reload
-        skip("Add assertions for updated state")
+        expect(individual[:password]).to eq "mypass2"
       end
 
       it "assigns the requested individual as @individual" do
@@ -119,10 +123,10 @@ RSpec.describe IndividualsController, type: :controller do
         expect(assigns(:individual)).to eq(individual)
       end
 
-      it "redirects to the individual" do
+      it "returns status 200" do
         individual = Individual.create! valid_attributes
         put :update, {:id => individual.to_param, :individual => valid_attributes}, valid_session
-        expect(response).to redirect_to(individual)
+        expect(response.status).to eq 200
       end
     end
 
@@ -133,11 +137,6 @@ RSpec.describe IndividualsController, type: :controller do
         expect(assigns(:individual)).to eq(individual)
       end
 
-      it "re-renders the 'edit' template" do
-        individual = Individual.create! valid_attributes
-        put :update, {:id => individual.to_param, :individual => invalid_attributes}, valid_session
-        expect(response).to render_template("edit")
-      end
     end
   end
 
@@ -149,10 +148,10 @@ RSpec.describe IndividualsController, type: :controller do
       }.to change(Individual, :count).by(-1)
     end
 
-    it "redirects to the individuals list" do
+    it "returns status 204" do
       individual = Individual.create! valid_attributes
       delete :destroy, {:id => individual.to_param}, valid_session
-      expect(response).to redirect_to(individuals_url)
+      expect(response.status).to eq 204
     end
   end
 

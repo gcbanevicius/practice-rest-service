@@ -4,7 +4,7 @@ RSpec.describe "organizations/show", type: :view do
   before(:each) do
     @organization = assign(:organization, Organization.create!(
       :name => "Name",
-      :url => "Url"
+      :url => "Url.com"
     ))
   end
 
