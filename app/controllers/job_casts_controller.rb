@@ -6,7 +6,7 @@ class JobCastsController < ApplicationController
     @job_casts = JobCast.all
 
     respond_to do |format|
-      format.html # comment out this line to implement RESTful API!
+      #format.html # comment out this line to implement RESTful JSON API!
       format.json { render json: @job_casts }
       format.any { render json: @job_casts }
     end

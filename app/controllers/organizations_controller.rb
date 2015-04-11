@@ -6,7 +6,7 @@ class OrganizationsController < ApplicationController
     @organizations = Organization.all
 
     respond_to do |format|
-      format.html # comment out this line to implement restful api!
+      #format.html # comment out this line to implement restful JSON api!
       format.json { render json: @organizations }
       format.any { render json: @organizations }
     end

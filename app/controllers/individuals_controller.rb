@@ -6,7 +6,7 @@ class IndividualsController < ApplicationController
     @individuals = Individual.all
 
     respond_to do |format|
-      format.html # comment out this line to implement restful api!
+      #format.html # comment out this line to implement restful JSON api!
       format.json { render json: @individuals }
       format.any { render json: @individuals }
     end
