@@ -17,8 +17,9 @@ RSpec.describe "Organizations", type: :request do
 
   describe "GET /organizations" do
     it "works! (now write some real specs)" do
-      get organizations_path
+      get "/organizations"
       expect(response).to have_http_status(200)
+      expect(JSON.parse(response.body)).to be_truthy
     end
   end
 
@@ -51,7 +52,7 @@ RSpec.describe "Organizations", type: :request do
       new_organization_params["url"] = "newsoftwarecorp.edu"
      
       ind = Organization.create(@organization_params)      
-      patch "/organizations/#{ind.id}", :id => ind.id, :organization => new_organization_params
+      patch "/organizations/#{ind.id}", format: :json, :id => ind.id, :organization => new_organization_params
       
       expect(JSON.parse(response.body)["url"]).to eq @organization_params["url"]
 
@@ -65,6 +66,7 @@ RSpec.describe "Organizations", type: :request do
       delete "/organizations/#{org.id}"      
 
       expect(response).to have_http_status(204)
+      expect(response.body).to eq ""
 
     end
   end

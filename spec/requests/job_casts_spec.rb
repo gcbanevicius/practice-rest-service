@@ -25,8 +25,9 @@ RSpec.describe "JobCasts", type: :request do
 
   describe "GET /job_casts" do
     it "works! (now write some real specs)" do
-      get job_casts_path
+      get "/job_casts"
       expect(response).to have_http_status(200)
+      expect(JSON.parse(response.body)).to be_truthy
     end
   end
 
@@ -61,7 +62,7 @@ RSpec.describe "JobCasts", type: :request do
 
      
       jc = JobCast.create(@job_cast_params)      
-      patch "/job_casts/#{jc.id}", :id => jc.id, :job_cast => new_job_cast_params
+      patch "/job_casts/#{jc.id}", format: :json, :id => jc.id, :job_cast => new_job_cast_params
       
       expect(JSON.parse(response.body)["title"]).to eq @job_cast_params["title"]
       expect(JSON.parse(response.body)["description"]).to eq @job_cast_params["description"]
@@ -76,6 +77,7 @@ RSpec.describe "JobCasts", type: :request do
       delete "/job_casts/#{jc.id}"      
 
       expect(response).to have_http_status(204)
+      expect(response.body).to eq ""
 
     end
   end

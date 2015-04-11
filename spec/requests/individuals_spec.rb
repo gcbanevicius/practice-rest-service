@@ -19,8 +19,9 @@ RSpec.describe "Individuals", type: :request do
 
   describe "GET /individuals" do
     it "works! (now write some real specs)" do
-      get individuals_path
+      get "/individuals"
       expect(response).to have_http_status(200)
+      expect(JSON.parse(response.body)).to be_truthy
     end
   end
 
@@ -53,7 +54,7 @@ RSpec.describe "Individuals", type: :request do
       new_individual_params["first_name"] = "James"
      
       ind = Individual.create(@individual_params)      
-      patch "/individuals/#{ind.id}", :id => ind.id, :individual => new_individual_params
+      patch "/individuals/#{ind.id}", format: :json, :id => ind.id, :individual => new_individual_params
       
       expect(JSON.parse(response.body)["first_name"]).to eq @individual_params["first_name"]
 
@@ -67,6 +68,7 @@ RSpec.describe "Individuals", type: :request do
       delete "/individuals/#{jc.id}"      
 
       expect(response).to have_http_status(204)
+      expect(response.body).to eq ""
 
     end
   end
