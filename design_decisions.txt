@@ -4,3 +4,24 @@ support a range type.
 
 -The :skills field for JobCast is treated as serialized text array, to 
 avoid making a new model for what might be an arbitrary list of words.
+
+-there are 2 methods which return HTML pages (for convenience):
+GET /model_name/new => display form for creating new record
+GET /model_name/:id/edit => display form for editing
+(you can comment out the 'format.hmtl' line in Controller#index to get an HTML
+page for the list, i.e. index, action)
+
+-below I give the three models at the center of the service, and outline
+the relationships between them:
+
+Organization: has_many JobCasts
+  -an organization can create/own many JobCasts at the same time
+
+Individual: has_and_belongs_to_many JobCasts
+  -one person may be matched with many JobCasts at the same time,
+  but a JobCast may also have many people matched to it
+
+JobCast: has_and_belongs_to_many JobCasts, belongs_to Organization
+  -one person may be matched with many JobCasts at the same time,
+  but a JobCast may also have many people matched to it
+  -as above, a JobCast belongs to exactly one Organization
